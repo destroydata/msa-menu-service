@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/menu")
@@ -36,6 +38,12 @@ public class MenuController {
     ){
         return menuService
                 .getByStoreId(storeId, PageRequest.of(page,size));
+    }
+    @GetMapping("ids")
+    // /api/v1/menu/ids?ids=1&ids=2&ids=3&ids=4
+    public List<MenuResponse> getAllByIds(
+            @RequestParam(name = "ids") List<Long> ids){
+        return menuService.getByIds(ids);
     }
 
 

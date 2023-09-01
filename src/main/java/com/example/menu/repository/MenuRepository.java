@@ -7,13 +7,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface MenuRepository
         extends JpaRepository<Menu, Long> {
     @Query("select " +
             "new " +
             "com.example.menu.domain.response" +
-            ".MenuResponse(m.id, m.name, m.price) " +
+            ".MenuResponse(m.id, m.name, m.price,m.store.id) " +
             "from Menu m " +
             "where m.store.id = :storeId")
     Page<MenuResponse> findByStore(Long storeId, PageRequest request);
+
+    List<Menu> findByIdIn(List<Long> ids);
 }
